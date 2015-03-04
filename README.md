@@ -1,6 +1,6 @@
 
-[![Build Status](https://drone.io/github.com/tleyden/open-ocr/status.png)](https://drone.io/github.com/tleyden/open-ocr/latest) [![GoDoc](http://godoc.org/github.com/tleyden/open-ocr?status.png)](http://godoc.org/github.com/tleyden/open-ocr) 
-[![Join the chat at https://gitter.im/tleyden/open-ocr](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tleyden/open-ocr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://drone.io/github.com/dhorbach/open-ocr/status.png)](https://drone.io/github.com/dhorbach/open-ocr/latest) [![GoDoc](http://godoc.org/github.com/dhorbach/open-ocr?status.png)](http://godoc.org/github.com/dhorbach/open-ocr) 
+[![Join the chat at https://gitter.im/dhorbach/open-ocr](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dhorbach/open-ocr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 OpenOCR makes it simple to host your own OCR REST API.
@@ -9,27 +9,27 @@ The heavy lifting OCR work is handled by [Tesseract OCR](https://code.google.com
 
 [Docker](http://www.docker.io) is used to containerize the various components of the service.
 
-![screenshot](http://tleyden-misc.s3.amazonaws.com/blog_images/openocr-architecture.png)
+![screenshot](http://dhorbach-misc.s3.amazonaws.com/blog_images/openocr-architecture.png)
 
 # Features
 
 * Scalable message passing architecture via RabbitMQ.
 * Platform independence via Docker containers.
 * Supports 31 languages in addition to English 
-* Ability to use an image pre-processing chain.  An example using [Stroke Width Transform](https://github.com/tleyden/open-ocr/wiki/Stroke-Width-Transform) is provided.
+* Ability to use an image pre-processing chain.  An example using [Stroke Width Transform](https://github.com/dhorbach/open-ocr/wiki/Stroke-Width-Transform) is provided.
 * Pass arguments to Tesseract such as character whitelist and page segment mode.
 * [REST API docs](http://docs.openocr.apiary.io/)
-* A [Go REST client](http://github.com/tleyden/open-ocr-client) is available.
+* A [Go REST client](http://github.com/dhorbach/open-ocr-client) is available.
 
 # Launching OpenOCR on a Docker PAAS
 
 OpenOCR can easily run on any PAAS that supports Docker containers.  Here are the instructions for a few that have already been tested:
 
-* [Google Compute Engine](https://github.com/tleyden/open-ocr/wiki/Installation-on-Google-Compute-Engine)
-* [AWS](https://github.com/tleyden/open-ocr/wiki/Installation-on-CoreOS-Fleet)
-* [Tutum](https://github.com/tleyden/open-ocr/wiki/Installation-on-Tutum)
+* [Google Compute Engine](https://github.com/dhorbach/open-ocr/wiki/Installation-on-Google-Compute-Engine)
+* [AWS](https://github.com/dhorbach/open-ocr/wiki/Installation-on-CoreOS-Fleet)
+* [Tutum](https://github.com/dhorbach/open-ocr/wiki/Installation-on-Tutum)
 
-If your preferred PAAS isn't listed, please open a [Github issue](https://github.com/tleyden/open-ocr/issues) to request instructions.
+If your preferred PAAS isn't listed, please open a [Github issue](https://github.com/dhorbach/open-ocr/issues) to request instructions.
 
 # Launching OpenOCR on Ubuntu 14.04
 
@@ -57,7 +57,7 @@ The ip address `10.0.2.15` will be used as the `RABBITMQ_HOST` env variable belo
 Here's how to launch the docker images needed for OpenOCR.
 
 ```
-$ curl -O https://raw.githubusercontent.com/tleyden/open-ocr/master/launcher/launcher.sh
+$ curl -O https://raw.githubusercontent.com/dhorbach/open-ocr/master/launcher/launcher.sh
 $ export RABBITMQ_HOST=10.0.2.15 RABBITMQ_PASS=supersecret2 HTTP_PORT=8080
 $ chmod +x launcher.sh
 $ ./launcher.sh
@@ -66,8 +66,8 @@ $ ./launcher.sh
 This will start three docker instances:
 
 * [RabbitMQ](https://index.docker.io/u/tutum/rabbitmq/)
-* [OpenOCR Worker](https://index.docker.io/u/tleyden5iwx/open-ocr/)
-* [OpenOCR HTTP API Server](https://index.docker.io/u/tleyden5iwx/open-ocr/)
+* [OpenOCR Worker](https://index.docker.io/u/dhorbach5iwx/open-ocr/)
+* [OpenOCR HTTP API Server](https://index.docker.io/u/dhorbach5iwx/open-ocr/)
 
 You are now ready to decode images → text via your REST API.
 
@@ -82,9 +82,9 @@ You are now ready to decode images → text via your REST API.
 Fig will start four docker instances
 
 * [RabbitMQ](https://index.docker.io/u/tutum/rabbitmq/)
-* [OpenOCR Worker](https://index.docker.io/u/tleyden5iwx/open-ocr/)
-* [OpenOCR HTTP API Server](https://index.docker.io/u/tleyden5iwx/open-ocr/)
-* [OpenOCR Transform Worker](https://registry.hub.docker.com/u/tleyden5iwx/open-ocr-preprocessor/)
+* [OpenOCR Worker](https://index.docker.io/u/dhorbach5iwx/open-ocr/)
+* [OpenOCR HTTP API Server](https://index.docker.io/u/dhorbach5iwx/open-ocr/)
+* [OpenOCR Transform Worker](https://registry.hub.docker.com/u/dhorbach5iwx/open-ocr-preprocessor/)
  
 # Test the REST API 
 
@@ -113,12 +113,12 @@ below I have used a few variations that work for variable names.
 
 The REST API also supports:
 
-* Uploading the image content via `multipart/related`, rather than passing an image URL.  (example client code provided in the [Go REST client](http://github.com/tleyden/open-ocr-client))
+* Uploading the image content via `multipart/related`, rather than passing an image URL.  (example client code provided in the [Go REST client](http://github.com/dhorbach/open-ocr-client))
 * Tesseract config vars (eg, equivalent of -c arguments when using Tesseract via the command line) and Page Seg Mode 
-* Ability to use an image pre-processing chain, eg [Stroke Width Transform](https://github.com/tleyden/open-ocr/wiki/Stroke-Width-Transform).
+* Ability to use an image pre-processing chain, eg [Stroke Width Transform](https://github.com/dhorbach/open-ocr/wiki/Stroke-Width-Transform).
 * Non-English languages
 
-See the [REST API docs](http://docs.openocr.apiary.io/) and the [Go REST client](http://github.com/tleyden/open-ocr-client) for details.
+See the [REST API docs](http://docs.openocr.apiary.io/) and the [Go REST client](http://github.com/dhorbach/open-ocr-client) for details.
 
 
 # Uploading local files using curl
@@ -132,7 +132,7 @@ The supplied `docs/upload-local-file.sh` provides an example of how to upload a 
 # Community
 
 * Follow [@OpenOCR](https://twitter.com/openocr) on Twitter
-* Checkout the [Github issue tracker](https://github.com/tleyden/open-ocr/issues)
+* Checkout the [Github issue tracker](https://github.com/dhorbach/open-ocr/issues)
 
 # License
 

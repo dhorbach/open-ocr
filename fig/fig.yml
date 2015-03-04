@@ -7,7 +7,7 @@ rabbitmq:
 
 # Start transformation worker
 strokewidthtransform:
-  image: tleyden5iwx/open-ocr-preprocessor
+  image: dhorbach5iwx/open-ocr-preprocessor
   volumes: 
     - scripts/:/opt/open-ocr/
   dns: 8.8.8.8
@@ -17,7 +17,7 @@ strokewidthtransform:
 
 # Start OCR worker
 openocrworker:
-  image: tleyden5iwx/open-ocr
+  image: dhorbach5iwx/open-ocr
   volumes: 
     - scripts/:/opt/open-ocr/
   dns: 8.8.8.8
@@ -27,7 +27,7 @@ openocrworker:
 
 # Start http server
 openocr:
-  image: tleyden5iwx/open-ocr
+  image: dhorbach5iwx/open-ocr
   dns: 8.8.8.8
   volumes: 
     - scripts/:/opt/open-ocr/
