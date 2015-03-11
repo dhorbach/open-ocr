@@ -101,7 +101,7 @@ func (s *OcrHttpMultipartHandler) ServeHTTP(w http.ResponseWriter, req *http.Req
 
 	logg.LogTo("OCR_HTTP", "ocrRequest: %v", ocrRequest)
 
-	ocrResult, err := HandleOcrRequest(ocrRequest, s.RabbitConfig)
+	ocrResult, err := HandleOcrRequest(ocrRequest, s.RabbitConfig, false)
 
 	if err != nil {
 		msg := "Unable to perform OCR decode.  Error: %v"

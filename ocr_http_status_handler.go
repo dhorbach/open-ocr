@@ -1,0 +1,46 @@
+package ocrworker
+
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+
+	"github.com/couchbaselabs/logg"
+)
+
+type OcrHttpStatusHandler struct {
+}
+
+func NewOcrHttpStatusHandler() *OcrHttpStatusHandler {
+	return &OcrHttpStatusHandler{}
+}
+
+func (s *OcrHttpStatusHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+
+	logg.LogTo("OCR_HTTP", "serveHttp called")
+	defer req.Body.Close()
+
+	ocrRequest := OcrRequest{}
+	decoder := json.NewDecoder(req.Body)
+	err := decoder.Decode(&ocrRequest)
+	if err != nil {
+		logg.LogError(err)
+		http.Error(w, "Unable to unmarshal json", 500)
+		return
+	}
+
+	ocrResult, err := CheckOcrStatusById(ocrRequest.ImgUrl)
+
+	if err != nil {
+		msg := "Unable to perform OCR status check.  Error: %v"
+		errMsg := fmt.Sprintf(msg, err)
+		logg.LogError(fmt.Errorf(errMsg))
+		http.Error(w, errMsg, 500)
+		return
+	}
+
+	logg.LogTo("OCR_HTTP", "ocrResult: %v", ocrResult)
+
+	fmt.Fprintf(w, ocrResult.Text)
+
+}
