@@ -42,8 +42,7 @@ func main() {
 		fmt.Fprintf(w, text)
 	})
 
-	http.Handle("/ocr", ocrworker.NewOcrHttpHandler(rabbitConfig, false))
-	http.Handle("/ocr-request", ocrworker.NewOcrHttpHandler(rabbitConfig, true))
+	http.Handle("/ocr", ocrworker.NewOcrHttpHandler(rabbitConfig))
 	http.Handle("/ocr-status", ocrworker.NewOcrHttpStatusHandler())
 
 	http.Handle("/ocr-file-upload", ocrworker.NewOcrHttpMultipartHandler(rabbitConfig))

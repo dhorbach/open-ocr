@@ -17,7 +17,6 @@ const (
 
 type OcrRpcClient struct {
 	rabbitConfig RabbitConfig
-	distributed  bool
 	connection   *amqp.Connection
 	channel      *amqp.Channel
 }
@@ -29,10 +28,9 @@ type OcrResult struct {
 var requests map[string]chan OcrResult = make(map[string]chan OcrResult)
 var timers map[string]*time.Timer = make(map[string]*time.Timer)
 
-func NewOcrRpcClient(rc RabbitConfig, distributed bool) (*OcrRpcClient, error) {
+func NewOcrRpcClient(rc RabbitConfig) (*OcrRpcClient, error) {
 	ocrRpcClient := &OcrRpcClient{
 		rabbitConfig: rc,
-		distributed:  distributed,
 	}
 	return ocrRpcClient, nil
 }
@@ -131,7 +129,7 @@ func (c *OcrRpcClient) DecodeImage(ocrRequest OcrRequest) (OcrResult, error) {
 	); err != nil {
 		return OcrResult{}, nil
 	}
-	if c.distributed {
+	if ocrRequest.Deferred {
 		logg.LogTo("OCR_CLIENT", "Distributed request")
 		requestId, _ := uuid.NewV4()
 		timer := time.NewTimer(RESPONE_CACHE_TIMEOUT)
