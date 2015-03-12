@@ -170,7 +170,10 @@ func (t TesseractEngine) processImageFile(inputFilename string, density string, 
 
 	// build args array
 	cflags := engineArgs.Export()
-	cmdArgs := []string{inputFilename, tmpOutFileBaseName, density}
+	cmdArgs := []string{inputFilename, tmpOutFileBaseName}
+	if len(density) > 0 {
+		cmdArgs = append(cmdArgs, density)
+	}
 	cmdArgs = append(cmdArgs, cflags...)
 	logg.LogTo("OCR_TESSERACT", "cmdArgs: %v", cmdArgs)
 
