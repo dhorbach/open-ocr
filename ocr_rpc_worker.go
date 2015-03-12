@@ -181,6 +181,7 @@ func (w *OcrRpcWorker) resultForDelivery(d amqp.Delivery) (OcrResult, error) {
 		errMsg := fmt.Sprintf(msg, ocrRequest.ImgUrl, err)
 		logg.LogError(fmt.Errorf(errMsg))
 		ocrResult.Text = errMsg
+		ocrResult.Status = "error"
 		return ocrResult, err
 	}
 

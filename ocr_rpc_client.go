@@ -22,7 +22,8 @@ type OcrRpcClient struct {
 }
 
 type OcrResult struct {
-	Text string
+	Text   string `json:"text"`
+	Status string `json:"status"`
 }
 
 var requests map[string]chan OcrResult = make(map[string]chan OcrResult)
@@ -245,7 +246,7 @@ func CheckReply(rpcResponseChan chan OcrResult, timeout time.Duration) (OcrResul
 	case ocrResult := <-rpcResponseChan:
 		return ocrResult, nil
 	case <-time.After(timeout):
-		return OcrResult{}, fmt.Errorf("Timeout waiting for RPC response")
+		return OcrResult{Text: "Timeout waiting for RPC response", Status: "processing"}, nil
 	}
 }
 

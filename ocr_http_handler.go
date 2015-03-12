@@ -43,8 +43,13 @@ func (s *OcrHttpHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	}
 
 	logg.LogTo("OCR_HTTP", "ocrResult: %v", ocrResult)
-
-	fmt.Fprintf(w, ocrResult.Text)
+	w.Header().Set("Content-Type", "application/json")
+	js, err := json.Marshal(ocrResult)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Write(js)
 
 }
 
