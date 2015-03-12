@@ -231,7 +231,7 @@ func CheckOcrStatusById(requestId string) (OcrResult, error) {
 		return OcrResult{}, fmt.Errorf("No such request %s", requestId)
 	}
 	ocrResult, err := CheckReply(requests[requestId], time.Second*2)
-	if err == nil {
+	if ocrResult.Status != "processing" {
 		close(requests[requestId])
 		delete(requests, requestId)
 		timers[requestId].Stop()
