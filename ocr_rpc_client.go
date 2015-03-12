@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	RPC_RESPONSE_TIMEOUT  = time.Minute * 10
+	RPC_RESPONSE_TIMEOUT  = time.Minute * 5
 	RESPONE_CACHE_TIMEOUT = time.Minute * 20
 )
 
