@@ -118,7 +118,7 @@ func (t TesseractEngine) ProcessRequest(ocrRequest OcrRequest) (OcrResult, error
 		return OcrResult{}, err
 	}
 
-	ocrResult, err := t.processImageFile(tmpFileName, *engineArgs)
+	ocrResult, err := t.processImageFile(tmpFileName, ocrRequest.Density, *engineArgs)
 
 	return ocrResult, err
 
@@ -159,7 +159,7 @@ func (t TesseractEngine) tmpFileFromImageUrl(imgUrl string) (string, error) {
 
 }
 
-func (t TesseractEngine) processImageFile(inputFilename string, engineArgs TesseractEngineArgs) (OcrResult, error) {
+func (t TesseractEngine) processImageFile(inputFilename string, density string, engineArgs TesseractEngineArgs) (OcrResult, error) {
 
 	// if the input filename is /tmp/ocrimage, set the output file basename
 	// to /tmp/ocrimage as well, which will produce /tmp/ocrimage.txt output
@@ -170,7 +170,7 @@ func (t TesseractEngine) processImageFile(inputFilename string, engineArgs Tesse
 
 	// build args array
 	cflags := engineArgs.Export()
-	cmdArgs := []string{inputFilename, tmpOutFileBaseName}
+	cmdArgs := []string{inputFilename, tmpOutFileBaseName, density}
 	cmdArgs = append(cmdArgs, cflags...)
 	logg.LogTo("OCR_TESSERACT", "cmdArgs: %v", cmdArgs)
 

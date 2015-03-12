@@ -10,6 +10,7 @@ type OcrRequest struct {
 	PreprocessorArgs  map[string]interface{} `json:"preprocessor-args"`
 	EngineArgs        map[string]interface{} `json:"engine_args"`
 	Deferred          bool                   `json:"deferred"`
+	Density           string                 `json:"density"`
 
 	// decode ocr in http handler rather than putting in queue
 	InplaceDecode bool `json:"inplace_decode"`
